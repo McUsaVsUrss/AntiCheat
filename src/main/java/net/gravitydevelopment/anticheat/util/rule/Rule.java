@@ -20,8 +20,8 @@ package net.gravitydevelopment.anticheat.util.rule;
 
 import net.gravitydevelopment.anticheat.AntiCheat;
 import net.gravitydevelopment.anticheat.check.CheckType;
-import net.gravitydevelopment.anticheat.util.User;
 import net.gravitydevelopment.anticheat.util.Group;
+import net.gravitydevelopment.anticheat.util.User;
 import net.gravitydevelopment.anticheat.util.Utilities;
 import org.bukkit.GameMode;
 
@@ -34,91 +34,60 @@ import java.util.TreeMap;
 /**
  * A rule is a scriptable function used to customize the functions of AntiCheat<br />
  * Rules are executed whenever a user's level rises.<br /><br />
- * <p/>
+ * <p>
  * There are various variables you can use to interact with AntiCheat through your rules<br />
  * Variables are denoted with the type followed by a _ followed by the variable name.<br />
  * For instance, a variable coming from a user who has used FLY 5 times and is checked by a rule containing 'Check_FLY' will produce a value of 5.
  * <br /><br />
- * <p/>
+ * <p>
  * <b>Types of variables:</b><br />
  * <ul>
- *   <li>Check
- *     <ul>
- *       <li>Contains all valid checks as listed in {@link net.gravitydevelopment.anticheat.check.CheckType}</li>
- *       <li>Will return the number of times this user has failed the given check</li>
- *       <li><b>Example:</b> Check_SPRINT</li>
- *     </ul>
- *   </li>
- *   <li>Player
- *     <ul>
- *       <li>Contains NAME, the name of the player</li>
- *       <li>Contains LEVEL*, the player's current level</li>
- *       <li>Contains GROUP*, the name of the player's current hack group</li>
- *       <li>Contains CHECK, the check that was just failed</li>
- *       <li>Contains GAMEMODE*, the player's current Game Mode (Survival, Creative, Adventure)/li>
- *       <li>Contains WORLD, the name of the world the player is in/li>
- *       <li>Contains HEALTH*, the player's current health/li>
- *       <li>A * denotes that this value can be set, for example Player_HEALTH = 20.0/li>
- *     </ul>
- *   </li>
+ * <li>Check
+ * <ul>
+ * <li>Contains all valid checks as listed in {@link net.gravitydevelopment.anticheat.check.CheckType}</li>
+ * <li>Will return the number of times this user has failed the given check</li>
+ * <li><b>Example:</b> Check_SPRINT</li>
  * </ul>
- * <p/>
+ * </li>
+ * <li>Player
+ * <ul>
+ * <li>Contains NAME, the name of the player</li>
+ * <li>Contains LEVEL*, the player's current level</li>
+ * <li>Contains GROUP*, the name of the player's current hack group</li>
+ * <li>Contains CHECK, the check that was just failed</li>
+ * <li>Contains GAMEMODE*, the player's current Game Mode (Survival, Creative, Adventure)/li>
+ * <li>Contains WORLD, the name of the world the player is in/li>
+ * <li>Contains HEALTH*, the player's current health/li>
+ * <li>A * denotes that this value can be set, for example Player_HEALTH = 20.0/li>
+ * </ul>
+ * </li>
+ * </ul>
+ * <p>
  * There are also functions you can use to execute an action within AntiCheat<br />
  * Functions are denoted with the type followed by a period followed by the function name.<br />
  * For instance, a rule containing Player.KICK will result in the user being kicked.<br />
  * <br /><br />
- * <p/>
+ * <p>
  * <b>Types of functions:</b><br />
  * - Player: RESET, KICK, BAN, COMMAND[command] OR COMMAND[command1;command2]
  * <i>- when using commands <b>&player</b> will be replaced by the player name, <b>&world</b> will be replaced by the player's world,
  * and <b>&check</b> will be replaced by the check that caused this rule to be run</i><br />
  * <br /><br />
- * <p/>
+ * <p>
  * The Rule class itself is not an functional rule setup,
  * it is inherited and made functional by different implementations of the rule parser.<br />
  * The only current Rule implementation is the {@link net.gravitydevelopment.anticheat.util.rule.ConditionalRule}
  */
 public class Rule {
 
-    private static String string;
     private static final String VARIABLE_SET_REGEX = ".*(_).*=.*";
     private static final String FUNCTION_REGEX = ".*\\..*";
+    private static String string;
     private Type type;
-
-    public enum Type {
-        CONDITIONAL(".*[?]*.*:.*", "net.gravitydevelopment.anticheat.util.rule.ConditionalRule");
-
-        private String regex;
-        private String c;
-
-        private Type(String regex, String c) {
-            this.regex = regex;
-            this.c = c;
-        }
-
-        public boolean matches(String s) {
-            return s.matches(regex);
-        }
-
-        public String getInstance() {
-            return c;
-        }
-    }
 
     public Rule(String string, Type type) {
         this.string = Utilities.removeWhitespace(string).toLowerCase();
         this.type = type;
-    }
-
-    /**
-     * Check if the rule passed or failed
-     *
-     * @param user the user to check
-     * @return true if the rule has passed, false if failed
-     */
-    public boolean check(User user, CheckType type) {
-        // Default value
-        return true;
     }
 
     /**
@@ -140,6 +109,17 @@ public class Rule {
             }
         }
         return null;
+    }
+
+    /**
+     * Check if the rule passed or failed
+     *
+     * @param user the user to check
+     * @return true if the rule has passed, false if failed
+     */
+    public boolean check(User user, CheckType type) {
+        // Default value
+        return true;
     }
 
     /**
@@ -210,5 +190,25 @@ public class Rule {
     @Override
     public String toString() {
         return type + "{" + string + "}";
+    }
+
+    public enum Type {
+        CONDITIONAL(".*[?]*.*:.*", "net.gravitydevelopment.anticheat.util.rule.ConditionalRule");
+
+        private String regex;
+        private String c;
+
+        private Type(String regex, String c) {
+            this.regex = regex;
+            this.c = c;
+        }
+
+        public boolean matches(String s) {
+            return s.matches(regex);
+        }
+
+        public String getInstance() {
+            return c;
+        }
     }
 }

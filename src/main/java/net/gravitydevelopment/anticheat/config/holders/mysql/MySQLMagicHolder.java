@@ -64,10 +64,10 @@ public class MySQLMagicHolder extends ConfigurationTable implements InvocationHa
                 "FROM (";
 
         Method[] methods = Magic.class.getMethods();
-        for (int i=1;i<=methods.length;i++) {
-            String key = methods[i-1].getName();
+        for (int i = 1; i <= methods.length; i++) {
+            String key = methods[i - 1].getName();
             Object value = defaults.get(key);
-            String type1 = methods[i-1].getReturnType().getSimpleName();
+            String type1 = methods[i - 1].getReturnType().getSimpleName();
             String type2 = type1.equals("int") ? "double" : "int";
             sqlPopulate += "(SELECT '" + key + "' as `key`, " + (type1.equals("int") ? value : "null") + " as value_" + type1 + ", " + (type1.equals("double") ? value : "null") + " as value_" + type2 + ")";
             if (i < methods.length) sqlPopulate += " UNION ALL ";
@@ -94,10 +94,10 @@ public class MySQLMagicHolder extends ConfigurationTable implements InvocationHa
                     doubles.put(key, set.getDouble("value_double"));
                 } else {
                     AntiCheat.getPlugin().getLogger().severe("The magic value " + key + " loaded from the database did not have a value configured. Using the default value.");
-                    for (int i=1;i<=methods.length;i++) {
-                        String name = methods[i-1].getName();
+                    for (int i = 1; i <= methods.length; i++) {
+                        String name = methods[i - 1].getName();
                         if (name.equalsIgnoreCase(key)) {
-                            String type = methods[i-1].getReturnType().getSimpleName();
+                            String type = methods[i - 1].getReturnType().getSimpleName();
                             if (type.equals("int")) {
                                 ints.put(key, defaults.getInt(key));
                             } else if (type.equals("double")) {
@@ -119,7 +119,7 @@ public class MySQLMagicHolder extends ConfigurationTable implements InvocationHa
             return ints.get(key).intValue();
         } else if (doubles.containsKey(key)) {
             return doubles.get(key).doubleValue();
-        } else if (defaults.getString(key) != null ) {
+        } else if (defaults.getString(key) != null) {
             if (method.getReturnType().getSimpleName().equals("int")) {
                 int value = defaults.getInt(key);
                 try {

@@ -32,26 +32,25 @@ import java.util.SortedMap;
  * Where CONDITION is a statement that will be evaluated as either <b>TRUE</b> or <b>FALSE</b>
  * and the results are actions to be taken for either outcome.
  * <br /><br />
- * <p/>
+ * <p>
  * Should you need additional actions, the system will recursively parse the following values and handle appropriately.
  * <br />
  * For instance, (CONDITION) ? (TRUE RESULT) : (CONDITION) ? (TRUE RESULT) : (FALSE RESULT) is a valid rule
  * <br /><br />
- * <p/>
+ * <p>
  * An example of a valid Conditional Rule:<br />
  * Check_SPIDER > 0 ? Player.KICK : null<br />
  * <i>The above statement would read 'If the spider check has been failed over zero times, kick the player. Otherwise, do nothing.'</i>
- * <p/>
+ * <p>
  * To see syntax for variables and functions that you may use, see {@link net.gravitydevelopment.anticheat.util.rule.Rule}
  */
 public class ConditionalRule extends Rule {
 
-    private static ScriptEngineManager factory = new ScriptEngineManager();
-    private static ScriptEngine engine = factory.getEngineByName("js");
-
     private static final String TRUE_DELIMITER = "\\?";
     private static final String FALSE_DELIMITER = ":";
     private static final Type TYPE = Type.CONDITIONAL;
+    private static ScriptEngineManager factory = new ScriptEngineManager();
+    private static ScriptEngine engine = factory.getEngineByName("js");
 
     public ConditionalRule(String string) {
         super(string, TYPE);

@@ -37,11 +37,6 @@ public class Database {
     private String sqlLogEvent;
     private String sqlCleanEvents;
     private String sqlCreateEvents;
-
-    public enum DatabaseType {
-        MySQL,
-    }
-
     private DatabaseType type;
     private String hostname;
     private int port;
@@ -50,20 +45,14 @@ public class Database {
     private String prefix;
     private String schema;
     private String serverName;
-
     private long logInterval;
     private long logLife;
-
     private boolean syncLevels;
     private long syncInterval;
-
     private Connection connection;
-
     private PreparedStatement eventBatch;
-
     private BukkitTask eventTask;
     private BukkitTask syncTask;
-
     public Database(DatabaseType type, String hostname, int port, String username, String password, String prefix, String schema, String serverName, String logInterval, String logLife, boolean syncLevels, String syncInterval) {
         this.type = type;
         this.hostname = hostname;
@@ -144,7 +133,7 @@ public class Database {
                 }, logInterval * 20, logInterval * 20);
             }
 
-            if(syncLevels && syncInterval != 0) {
+            if (syncLevels && syncInterval != 0) {
                 syncTask = Bukkit.getScheduler().runTaskTimerAsynchronously(AntiCheat.getPlugin(), new Runnable() {
                     @Override
                     public void run() {
@@ -225,5 +214,9 @@ public class Database {
         for (User user : AntiCheat.getManager().getUserManager().getUsers()) {
             AntiCheat.getManager().getConfiguration().getLevels().updateLevelToUser(user);
         }
+    }
+
+    public enum DatabaseType {
+        MySQL,
     }
 }

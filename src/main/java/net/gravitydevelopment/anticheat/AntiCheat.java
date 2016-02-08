@@ -25,22 +25,17 @@ import net.gravitydevelopment.anticheat.event.*;
 import net.gravitydevelopment.anticheat.manage.AntiCheatManager;
 import net.gravitydevelopment.anticheat.manage.PacketManager;
 import net.gravitydevelopment.anticheat.util.User;
-import net.gravitydevelopment.anticheat.util.Utilities;
-import net.gravitydevelopment.anticheat.xray.XRayListener;
-import net.gravitydevelopment.anticheat.xray.XRayTracker;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AntiCheat extends JavaPlugin {
 
+    private static final int PROJECT_ID = 38723;
     private static AntiCheatManager manager;
     private static AntiCheat plugin;
     private static List<Listener> eventList = new ArrayList<Listener>();
@@ -49,10 +44,51 @@ public class AntiCheat extends JavaPlugin {
     private static Configuration config;
     private static boolean verbose;
     private static boolean developer;
-    private static final int PROJECT_ID = 38723;
     private static PacketManager packetManager;
     private static boolean protocolLib = false;
     private static Long loadTime;
+
+    public static AntiCheat getPlugin() {
+        return plugin;
+    }
+
+    public static AntiCheatManager getManager() {
+        return manager;
+    }
+
+    public static boolean isUpdated() {
+        return !update;
+    }
+
+    public static String getUpdateDetails() {
+        return updateDetails;
+    }
+
+    public static String getVersion() {
+        return manager.getPlugin().getDescription().getVersion();
+    }
+
+    public static boolean developerMode() {
+        return developer;
+    }
+
+    public static void setDeveloperMode(boolean b) {
+        developer = b;
+    }
+
+    public static boolean isUsingProtocolLib() {
+        return protocolLib;
+    }
+
+    public static void debugLog(final String string) {
+        Bukkit.getScheduler().runTask(getPlugin(), new Runnable() {
+            public void run() {
+                if (developer) {
+                    manager.debugLog("[DEBUG] " + string);
+                }
+            }
+        });
+    }
 
     @Override
     public void onEnable() {
@@ -143,52 +179,10 @@ public class AntiCheat extends JavaPlugin {
         }
     }
 
-    public static AntiCheat getPlugin() {
-        return plugin;
-    }
-
-    public static AntiCheatManager getManager() {
-        return manager;
-    }
-
-    public static boolean isUpdated() {
-        return !update;
-    }
-
-    public static String getUpdateDetails() {
-        return updateDetails;
-    }
-
-    public static String getVersion() {
-        return manager.getPlugin().getDescription().getVersion();
-    }
-
     private void cleanup() {
         eventList = null;
         manager = null;
         config = null;
-    }
-
-    public static boolean developerMode() {
-        return developer;
-    }
-
-    public static void setDeveloperMode(boolean b) {
-        developer = b;
-    }
-
-    public static boolean isUsingProtocolLib() {
-        return protocolLib;
-    }
-
-    public static void debugLog(final String string) {
-        Bukkit.getScheduler().runTask(getPlugin(), new Runnable() {
-            public void run() {
-                if (developer) {
-                    manager.debugLog("[DEBUG] " + string);
-                }
-            }
-        });
     }
 
     public void verboseLog(final String string) {

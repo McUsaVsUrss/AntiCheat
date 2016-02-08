@@ -30,15 +30,15 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p/>
+ * <p>
  * The manager that AntiCheat will check with to see if it should watch certain checks and certain players.
  */
 
 public class CheckManager {
-    private AntiCheatManager manager = null;
-    private Configuration config;
     private static List<CheckType> checkIgnoreList = new ArrayList<CheckType>();
     private static Map<String, List<CheckType>> exemptList = new HashMap<String, List<CheckType>>();
+    private AntiCheatManager manager = null;
+    private Configuration config;
 
     public CheckManager(AntiCheatManager manager) {
         this.manager = manager;

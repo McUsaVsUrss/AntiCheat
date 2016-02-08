@@ -66,7 +66,7 @@ public class MySQLLangHolder extends ConfigurationTable implements InvocationHan
                 "FROM (";
 
         Method[] methods = Lang.class.getMethods();
-        for (int i=1;i<=methods.length;i++) {
+        for (int i = 1; i <= methods.length; i++) {
             sqlPopulate += "(SELECT ? as `key`, ? as `value`)";
             if (i < methods.length) sqlPopulate += " UNION ALL ";
         }
@@ -77,8 +77,8 @@ public class MySQLLangHolder extends ConfigurationTable implements InvocationHan
         try {
             PreparedStatement insert = getConnection().prepareStatement(sqlPopulate);
             int strings = 1;
-            for (int i=1;i<=methods.length;i++) {
-                String key = methods[i-1].getName();
+            for (int i = 1; i <= methods.length; i++) {
+                String key = methods[i - 1].getName();
                 String value = defaults.getString(key);
                 insert.setString(strings, key);
                 strings++;

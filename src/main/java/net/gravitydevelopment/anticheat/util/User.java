@@ -392,12 +392,12 @@ public class User {
         return isWaitingOnLevelSync;
     }
 
-    public void setLevelSyncTimestamp(Timestamp timestamp) {
-        levelSyncTimestamp = timestamp;
-    }
-
     public Timestamp getLevelSyncTimestamp() {
         return levelSyncTimestamp;
+    }
+
+    public void setLevelSyncTimestamp(Timestamp timestamp) {
+        levelSyncTimestamp = timestamp;
     }
 
     @Override

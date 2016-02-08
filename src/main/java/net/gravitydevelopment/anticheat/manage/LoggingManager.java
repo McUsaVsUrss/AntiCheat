@@ -36,9 +36,9 @@ import java.util.logging.Logger;
 
 public class LoggingManager {
 
-    private final Logger fileLogger;
     private static Handler fileHandler;
     private static List<String> logs = new CopyOnWriteArrayList<String>();
+    private final Logger fileLogger;
     private final Configuration config;
 
     public LoggingManager(AntiCheat plugin, Logger logger, Configuration config) {
@@ -87,7 +87,7 @@ public class LoggingManager {
     }
 
     public void logToPlayers(String message) {
-        for(Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
             if (Permission.SYSTEM_NOTICE.get(player)) {
                 player.sendMessage(message);
             }

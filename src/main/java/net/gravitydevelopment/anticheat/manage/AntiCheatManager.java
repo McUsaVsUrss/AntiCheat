@@ -55,6 +55,14 @@ public class AntiCheatManager {
         backend = new Backend(this);
     }
 
+    public static void close() {
+        loggingManager.closeHandler();
+
+        if (configuration.getConfig().enterprise.getValue()) {
+            configuration.getEnterprise().database.shutdown();
+        }
+    }
+
     public void log(String message) {
         loggingManager.log(message);
     }
@@ -133,13 +141,5 @@ public class AntiCheatManager {
 
     public LoggingManager getLoggingManager() {
         return loggingManager;
-    }
-
-    public static void close() {
-        loggingManager.closeHandler();
-
-        if (configuration.getConfig().enterprise.getValue()) {
-            configuration.getEnterprise().database.shutdown();
-        }
     }
 }

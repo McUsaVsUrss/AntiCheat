@@ -31,12 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserManager {
-    private List<User> users = new ArrayList<User>();
-    private static AntiCheatManager manager;
-    private static Configuration config;
     private static final ChatColor GRAY = ChatColor.GRAY;
     private static final ChatColor GOLD = ChatColor.GOLD;
     private static final ChatColor RED = ChatColor.RED;
+    private static AntiCheatManager manager;
+    private static Configuration config;
+    private List<User> users = new ArrayList<User>();
 
     /**
      * Initialize the user manager

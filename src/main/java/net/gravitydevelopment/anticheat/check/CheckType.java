@@ -19,8 +19,8 @@
 package net.gravitydevelopment.anticheat.check;
 
 import net.gravitydevelopment.anticheat.api.CheckFailEvent;
-import net.gravitydevelopment.anticheat.util.User;
 import net.gravitydevelopment.anticheat.util.Permission;
+import net.gravitydevelopment.anticheat.util.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <p/>
+ * <p>
  * All the types of checks and their corresponding permission nodes.
  */
 
@@ -73,6 +73,18 @@ public enum CheckType {
     }
 
     /**
+     * Get the reference name of a check
+     *
+     * @param type Type of check
+     * @return reference name
+     */
+    public static String getName(CheckType type) {
+        char[] chars = type.toString().replaceAll("_", " ").toLowerCase().toCharArray();
+        chars[0] = Character.toUpperCase(chars[0]);
+        return new String(chars);
+    }
+
+    /**
      * Determine whether a player has permission to bypass this check
      *
      * @param player Player to check
@@ -110,17 +122,5 @@ public enum CheckType {
      */
     public int getUses(String name) {
         return level.get(name) != null ? level.get(name) : 0;
-    }
-
-    /**
-     * Get the reference name of a check
-     *
-     * @param type Type of check
-     * @return reference name
-     */
-    public static String getName(CheckType type) {
-        char[] chars = type.toString().replaceAll("_", " ").toLowerCase().toCharArray();
-        chars[0] = Character.toUpperCase(chars[0]);
-        return new String(chars);
     }
 }

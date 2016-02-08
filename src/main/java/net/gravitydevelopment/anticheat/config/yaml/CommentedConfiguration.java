@@ -45,11 +45,63 @@ import java.util.logging.Level;
  * Some overridden code has been moved to this file from its parent & modified.
  */
 public class CommentedConfiguration extends YamlConfiguration {
-    private Map<Integer, String> comments = new HashMap<Integer, String>();
-
     private final DumperOptions yamlOptions = new DumperOptions();
     private final Representer yamlRepresenter = new YamlRepresenter();
     private final Yaml yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions);
+    private Map<Integer, String> comments = new HashMap<Integer, String>();
+
+    /**
+     * Creates a new {@link CommentedConfiguration}, loading from the given file.
+     * <p>
+     * Any errors loading the Configuration will be logged and then ignored.
+     * If the specified input is not a valid config, a blank config will be returned.
+     *
+     * @param file Input file
+     * @return Resulting configuration
+     * @throws IllegalArgumentException Thrown if file is null
+     */
+    public static CommentedConfiguration loadConfiguration(File file) {
+        Validate.notNull(file, "File cannot be null");
+
+        CommentedConfiguration config = new CommentedConfiguration();
+
+        try {
+            config.load(file);
+        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
+            Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, ex);
+        } catch (InvalidConfigurationException ex) {
+            Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, ex);
+        }
+
+        return config;
+    }
+
+    /**
+     * Creates a new {@link CommentedConfiguration}, loading from the given stream.
+     * <p>
+     * Any errors loading the Configuration will be logged and then ignored.
+     * If the specified input is not a valid config, a blank config will be returned.
+     *
+     * @param stream Input stream
+     * @return Resulting configuration
+     * @throws IllegalArgumentException Thrown if stream is null
+     */
+    public static CommentedConfiguration loadConfiguration(InputStream stream) {
+        Validate.notNull(stream, "Stream cannot be null");
+
+        CommentedConfiguration config = new CommentedConfiguration();
+
+        try {
+            config.load(stream);
+        } catch (IOException ex) {
+            Bukkit.getLogger().log(Level.SEVERE, "Cannot load configuration from stream", ex);
+        } catch (InvalidConfigurationException ex) {
+            Bukkit.getLogger().log(Level.SEVERE, "Cannot load configuration from stream", ex);
+        }
+
+        return config;
+    }
 
     @Override
     public void loadFromString(String contents) throws InvalidConfigurationException {
@@ -143,58 +195,5 @@ public class CommentedConfiguration extends YamlConfiguration {
         // End CommentedConfiguration
 
         return builder.toString();
-    }
-
-    /**
-     * Creates a new {@link CommentedConfiguration}, loading from the given file.
-     * <p/>
-     * Any errors loading the Configuration will be logged and then ignored.
-     * If the specified input is not a valid config, a blank config will be returned.
-     *
-     * @param file Input file
-     * @return Resulting configuration
-     * @throws IllegalArgumentException Thrown if file is null
-     */
-    public static CommentedConfiguration loadConfiguration(File file) {
-        Validate.notNull(file, "File cannot be null");
-
-        CommentedConfiguration config = new CommentedConfiguration();
-
-        try {
-            config.load(file);
-        } catch (FileNotFoundException ex) {
-        } catch (IOException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, ex);
-        } catch (InvalidConfigurationException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "Cannot load " + file, ex);
-        }
-
-        return config;
-    }
-
-    /**
-     * Creates a new {@link CommentedConfiguration}, loading from the given stream.
-     * <p/>
-     * Any errors loading the Configuration will be logged and then ignored.
-     * If the specified input is not a valid config, a blank config will be returned.
-     *
-     * @param stream Input stream
-     * @return Resulting configuration
-     * @throws IllegalArgumentException Thrown if stream is null
-     */
-    public static CommentedConfiguration loadConfiguration(InputStream stream) {
-        Validate.notNull(stream, "Stream cannot be null");
-
-        CommentedConfiguration config = new CommentedConfiguration();
-
-        try {
-            config.load(stream);
-        } catch (IOException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "Cannot load configuration from stream", ex);
-        } catch (InvalidConfigurationException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "Cannot load configuration from stream", ex);
-        }
-
-        return config;
     }
 }

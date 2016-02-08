@@ -23,8 +23,8 @@ import net.gravitydevelopment.anticheat.config.Configuration;
 import net.gravitydevelopment.anticheat.config.providers.Lang;
 import net.gravitydevelopment.anticheat.config.providers.Magic;
 import net.gravitydevelopment.anticheat.manage.AntiCheatManager;
-import net.gravitydevelopment.anticheat.util.User;
 import net.gravitydevelopment.anticheat.util.Distance;
+import net.gravitydevelopment.anticheat.util.User;
 import net.gravitydevelopment.anticheat.util.Utilities;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -41,6 +41,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.*;
 
 public class Backend {
+    private static final CheckResult PASS = new CheckResult(CheckResult.Result.PASSED);
     private List<String> isInWater = new ArrayList<String>();
     private List<String> isInWaterCache = new ArrayList<String>();
     private List<String> isAscending = new ArrayList<String>();
@@ -88,11 +89,9 @@ public class Backend {
     private Map<String, Long> stepTime = new HashMap<String, Long>();
     private HashSet<Byte> transparent = new HashSet<Byte>();
     private Map<String, Long> lastFallPacket = new HashMap<String, Long>();
-
     private Magic magic;
     private AntiCheatManager manager = null;
     private Lang lang = null;
-    private static final CheckResult PASS = new CheckResult(CheckResult.Result.PASSED);
 
     public Backend(AntiCheatManager instance) {
         magic = instance.getConfiguration().getMagic();

@@ -49,7 +49,7 @@ public class CommandReset extends CommandBase {
                 AntiCheat.getManager().getBackend().resetChatLevel(user);
                 cs.sendMessage(args[0] + GREEN + " has been reset.");
             } else {
-                cs.sendMessage(RED + "Player: " +args[0] + " not found.");
+                cs.sendMessage(RED + "Player: " + args[0] + " not found.");
             }
         } else {
             sendHelp(cs);

@@ -66,7 +66,7 @@ public class CommandSpy extends CommandBase {
                         sender.sendMessage(GREEN + "You have been teleported to " + player.getName() + " and made invisible.");
                         sender.sendMessage(GREEN + "To stop spying, type " + WHITE + " /anti spy off");
                     } else {
-                        cs.sendMessage(RED + "Player: " +args[0] + " not found.");
+                        cs.sendMessage(RED + "Player: " + args[0] + " not found.");
                     }
                 } else {
                     if (sender.hasMetadata(Utilities.SPY_METADATA)) {
@@ -83,11 +83,11 @@ public class CommandSpy extends CommandBase {
                         sender.sendMessage(RED + "You were not spying.");
                     }
                 }
-                } else {
-                    cs.sendMessage(RED + "Sorry, but you can't spy on a player from the console.");
-                }
             } else {
-                sendHelp(cs);
+                cs.sendMessage(RED + "Sorry, but you can't spy on a player from the console.");
             }
+        } else {
+            sendHelp(cs);
         }
+    }
 }

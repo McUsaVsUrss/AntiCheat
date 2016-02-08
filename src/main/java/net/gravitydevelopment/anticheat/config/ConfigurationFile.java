@@ -28,18 +28,14 @@ import java.io.IOException;
 
 public class ConfigurationFile {
 
+    protected boolean needsReload;
     private File rawFile;
     private String fileName;
-
     private CommentedConfiguration configFile;
     private FileConfiguration defaultConfigFile;
     private Configuration config;
-
     private AntiCheat plugin;
-
     private boolean saveDefault;
-
-    protected boolean needsReload;
 
     public ConfigurationFile(AntiCheat plugin, Configuration config, String fileName) {
         this(plugin, config, fileName, true);

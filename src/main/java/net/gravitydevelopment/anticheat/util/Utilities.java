@@ -37,12 +37,73 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class Utilities {
+    public static final String SPY_METADATA = "ac-spydata";
     private static final List<Material> INSTANT_BREAK = new ArrayList<Material>();
     private static final List<Material> FOOD = new ArrayList<Material>();
     private static final List<Material> INTERACTABLE = new ArrayList<Material>();
     private static final Map<Material, Material> COMBO = new HashMap<Material, Material>();
 
-    public static final String SPY_METADATA = "ac-spydata";
+    static {
+        // START INSTANT BREAK MATERIALS
+        INSTANT_BREAK.add(Material.RED_MUSHROOM);
+        INSTANT_BREAK.add(Material.RED_ROSE);
+        INSTANT_BREAK.add(Material.BROWN_MUSHROOM);
+        INSTANT_BREAK.add(Material.YELLOW_FLOWER);
+        INSTANT_BREAK.add(Material.REDSTONE);
+        INSTANT_BREAK.add(Material.REDSTONE_TORCH_OFF);
+        INSTANT_BREAK.add(Material.REDSTONE_TORCH_ON);
+        INSTANT_BREAK.add(Material.REDSTONE_WIRE);
+        INSTANT_BREAK.add(Material.LONG_GRASS);
+        INSTANT_BREAK.add(Material.PAINTING);
+        INSTANT_BREAK.add(Material.WHEAT);
+        INSTANT_BREAK.add(Material.SUGAR_CANE);
+        INSTANT_BREAK.add(Material.SUGAR_CANE_BLOCK);
+        INSTANT_BREAK.add(Material.DIODE);
+        INSTANT_BREAK.add(Material.DIODE_BLOCK_OFF);
+        INSTANT_BREAK.add(Material.DIODE_BLOCK_ON);
+        INSTANT_BREAK.add(Material.SAPLING);
+        INSTANT_BREAK.add(Material.TORCH);
+        INSTANT_BREAK.add(Material.CROPS);
+        INSTANT_BREAK.add(Material.SNOW);
+        INSTANT_BREAK.add(Material.TNT);
+        INSTANT_BREAK.add(Material.POTATO);
+        INSTANT_BREAK.add(Material.CARROT);
+        // END INSTANT BREAK MATERIALS
+
+        // START INTERACTABLE MATERIALS
+        INTERACTABLE.add(Material.STONE_BUTTON);
+        INTERACTABLE.add(Material.LEVER);
+        INTERACTABLE.add(Material.CHEST);
+        // END INTERACTABLE MATERIALS
+
+        // START FOOD
+        FOOD.add(Material.COOKED_BEEF);
+        FOOD.add(Material.COOKED_CHICKEN);
+        FOOD.add(Material.COOKED_FISH);
+        FOOD.add(Material.GRILLED_PORK);
+        FOOD.add(Material.PORK);
+        FOOD.add(Material.MUSHROOM_SOUP);
+        FOOD.add(Material.RAW_BEEF);
+        FOOD.add(Material.RAW_CHICKEN);
+        FOOD.add(Material.RAW_FISH);
+        FOOD.add(Material.APPLE);
+        FOOD.add(Material.GOLDEN_APPLE);
+        FOOD.add(Material.MELON);
+        FOOD.add(Material.COOKIE);
+        FOOD.add(Material.BREAD);
+        FOOD.add(Material.SPIDER_EYE);
+        FOOD.add(Material.ROTTEN_FLESH);
+        FOOD.add(Material.POTATO_ITEM);
+        // END FOOD
+
+        // START COMBOS
+        COMBO.put(Material.SHEARS, Material.WOOL);
+        COMBO.put(Material.IRON_SWORD, Material.WEB);
+        COMBO.put(Material.DIAMOND_SWORD, Material.WEB);
+        COMBO.put(Material.STONE_SWORD, Material.WEB);
+        COMBO.put(Material.WOOD_SWORD, Material.WEB);
+        // END COMBOS
+    }
 
     /**
      * Send a hack level alert to players and console
@@ -456,7 +517,9 @@ public final class Utilities {
      * @return ArrayList with string
      */
     public static ArrayList<String> stringToList(final String string) {
-        return new ArrayList<String>() {{ add(string); }};
+        return new ArrayList<String>() {{
+            add(string);
+        }};
     }
 
     /**
@@ -478,16 +541,17 @@ public final class Utilities {
 
     /**
      * Parse a string in the format of "XdXhXmXs" to seconds
+     *
      * @param string The string to parse
      * @return seconds
      */
     public static long lifeToSeconds(String string) {
         if (string.equals("0") || string.equals("")) return 0;
-        String[] lifeMatch = new String[]{ "d", "h", "m", "s" };
-        int[] lifeInterval = new int[]{ 86400, 3600, 60, 1 };
+        String[] lifeMatch = new String[]{"d", "h", "m", "s"};
+        int[] lifeInterval = new int[]{86400, 3600, 60, 1};
         long seconds = 0L;
 
-        for (int i=0;i<lifeMatch.length;i++) {
+        for (int i = 0; i < lifeMatch.length; i++) {
             Matcher matcher = Pattern.compile("([0-9]*)" + lifeMatch[i]).matcher(string);
             while (matcher.find()) {
                 seconds += Integer.parseInt(matcher.group(1)) * lifeInterval[i];
@@ -495,68 +559,5 @@ public final class Utilities {
 
         }
         return seconds;
-    }
-
-
-    static {
-        // START INSTANT BREAK MATERIALS
-        INSTANT_BREAK.add(Material.RED_MUSHROOM);
-        INSTANT_BREAK.add(Material.RED_ROSE);
-        INSTANT_BREAK.add(Material.BROWN_MUSHROOM);
-        INSTANT_BREAK.add(Material.YELLOW_FLOWER);
-        INSTANT_BREAK.add(Material.REDSTONE);
-        INSTANT_BREAK.add(Material.REDSTONE_TORCH_OFF);
-        INSTANT_BREAK.add(Material.REDSTONE_TORCH_ON);
-        INSTANT_BREAK.add(Material.REDSTONE_WIRE);
-        INSTANT_BREAK.add(Material.LONG_GRASS);
-        INSTANT_BREAK.add(Material.PAINTING);
-        INSTANT_BREAK.add(Material.WHEAT);
-        INSTANT_BREAK.add(Material.SUGAR_CANE);
-        INSTANT_BREAK.add(Material.SUGAR_CANE_BLOCK);
-        INSTANT_BREAK.add(Material.DIODE);
-        INSTANT_BREAK.add(Material.DIODE_BLOCK_OFF);
-        INSTANT_BREAK.add(Material.DIODE_BLOCK_ON);
-        INSTANT_BREAK.add(Material.SAPLING);
-        INSTANT_BREAK.add(Material.TORCH);
-        INSTANT_BREAK.add(Material.CROPS);
-        INSTANT_BREAK.add(Material.SNOW);
-        INSTANT_BREAK.add(Material.TNT);
-        INSTANT_BREAK.add(Material.POTATO);
-        INSTANT_BREAK.add(Material.CARROT);
-        // END INSTANT BREAK MATERIALS
-
-        // START INTERACTABLE MATERIALS
-        INTERACTABLE.add(Material.STONE_BUTTON);
-        INTERACTABLE.add(Material.LEVER);
-        INTERACTABLE.add(Material.CHEST);
-        // END INTERACTABLE MATERIALS
-
-        // START FOOD
-        FOOD.add(Material.COOKED_BEEF);
-        FOOD.add(Material.COOKED_CHICKEN);
-        FOOD.add(Material.COOKED_FISH);
-        FOOD.add(Material.GRILLED_PORK);
-        FOOD.add(Material.PORK);
-        FOOD.add(Material.MUSHROOM_SOUP);
-        FOOD.add(Material.RAW_BEEF);
-        FOOD.add(Material.RAW_CHICKEN);
-        FOOD.add(Material.RAW_FISH);
-        FOOD.add(Material.APPLE);
-        FOOD.add(Material.GOLDEN_APPLE);
-        FOOD.add(Material.MELON);
-        FOOD.add(Material.COOKIE);
-        FOOD.add(Material.BREAD);
-        FOOD.add(Material.SPIDER_EYE);
-        FOOD.add(Material.ROTTEN_FLESH);
-        FOOD.add(Material.POTATO_ITEM);
-        // END FOOD
-
-        // START COMBOS
-        COMBO.put(Material.SHEARS, Material.WOOL);
-        COMBO.put(Material.IRON_SWORD, Material.WEB);
-        COMBO.put(Material.DIAMOND_SWORD, Material.WEB);
-        COMBO.put(Material.STONE_SWORD, Material.WEB);
-        COMBO.put(Material.WOOD_SWORD, Material.WEB);
-        // END COMBOS
     }
 }

@@ -22,7 +22,9 @@ import net.gravitydevelopment.anticheat.AntiCheat;
 import net.gravitydevelopment.anticheat.check.Backend;
 import net.gravitydevelopment.anticheat.check.CheckType;
 import net.gravitydevelopment.anticheat.config.Configuration;
-import net.gravitydevelopment.anticheat.manage.*;
+import net.gravitydevelopment.anticheat.manage.AntiCheatManager;
+import net.gravitydevelopment.anticheat.manage.CheckManager;
+import net.gravitydevelopment.anticheat.manage.UserManager;
 import net.gravitydevelopment.anticheat.util.User;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -60,10 +62,6 @@ public class EventListener implements Listener {
                 CONFIG.getEnterprise().database.logEvent(user, type);
             }
         }
-    }
-
-    public void resetCheck(CheckType type) {
-        USAGE_LIST.put(type, 0);
     }
 
     public static int getCheats(CheckType type) {
@@ -135,5 +133,9 @@ public class EventListener implements Listener {
 
     public static boolean silentMode() {
         return CONFIG.getConfig().silentMode.getValue();
+    }
+
+    public void resetCheck(CheckType type) {
+        USAGE_LIST.put(type, 0);
     }
 }

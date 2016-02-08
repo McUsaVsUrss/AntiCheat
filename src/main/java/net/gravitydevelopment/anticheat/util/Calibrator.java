@@ -41,10 +41,9 @@ public class Calibrator {
 
     public class CalibrationStep implements Listener {
 
-        private final String key;
-
-        private int trials = 0;
         public static final int MAX_TRIALS = 10;
+        private final String key;
+        private int trials = 0;
 
         public CalibrationStep(String key, String instruction) {
             this.key = key;

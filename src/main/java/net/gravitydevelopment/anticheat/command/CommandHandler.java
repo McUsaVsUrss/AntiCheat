@@ -50,9 +50,9 @@ public class CommandHandler implements CommandExecutor {
         if (args.length >= 1) {
             String command = args[0];
             // Shift args down
-            String[] newArgs = new String[args.length-1];
-            for (int i=1;i<args.length;i++) {
-                newArgs[i-1] = args[i];
+            String[] newArgs = new String[args.length - 1];
+            for (int i = 1; i < args.length; i++) {
+                newArgs[i - 1] = args[i];
             }
             for (CommandBase base : commands) {
                 if (base.getCommand().equalsIgnoreCase(command)) {

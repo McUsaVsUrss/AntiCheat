@@ -46,21 +46,6 @@ public class Group {
             this.color = c;
         }
     }
-    public String getName() {
-        return name;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public ChatColor getColor() {
-        return color;
-    }
-
-    public List<String> getActions() {
-        return actions;
-    }
 
     public static Group load(String string) {
         try {
@@ -79,6 +64,22 @@ public class Group {
             AntiCheat.getPlugin().getLogger().warning("This event will NOT run. (" + ex.getMessage() + ")");
             return null;
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public ChatColor getColor() {
+        return color;
+    }
+
+    public List<String> getActions() {
+        return actions;
     }
 
     @Override

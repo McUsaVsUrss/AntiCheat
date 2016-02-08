@@ -19,12 +19,11 @@
 package net.gravitydevelopment.anticheat.api;
 
 import net.gravitydevelopment.anticheat.AntiCheat;
+import net.gravitydevelopment.anticheat.check.CheckType;
 import net.gravitydevelopment.anticheat.manage.AntiCheatManager;
 import net.gravitydevelopment.anticheat.manage.CheckManager;
-import net.gravitydevelopment.anticheat.check.CheckType;
 import net.gravitydevelopment.anticheat.manage.UserManager;
 import net.gravitydevelopment.anticheat.util.Group;
-import net.gravitydevelopment.anticheat.xray.XRayTracker;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -36,7 +35,6 @@ import java.util.List;
 public class AntiCheatAPI {
     private static CheckManager chk = AntiCheat.getManager().getCheckManager();
     private static UserManager umr = AntiCheat.getManager().getUserManager();
-    private static XRayTracker xtracker = AntiCheat.getManager().getXRayTracker();
 
     // CheckManager API
 
@@ -100,19 +98,6 @@ public class AntiCheatAPI {
     }
 
     /**
-     * Find out if a check will occur for a player. This checks if they are being tracked, the check is active, the player isn't exempt from the check, and the player doesn't have override permission.
-     *
-     * @param player Player to check
-     * @param type   Type to check
-     * @return true if plugin will check this player, and that all things allow it to happen.
-     */
-    public boolean willCheck(Player player, CheckType type) {
-        return chk.willCheck(player, type);
-    }
-
-    // PlayerManager API
-
-    /**
      * Get a player's integer hack level
      *
      * @param player Player to check
@@ -124,6 +109,7 @@ public class AntiCheatAPI {
         return umr.safeGetLevel(player.getName());
     }
 
+    // PlayerManager API
 
     /**
      * Set a player's hack level
@@ -166,21 +152,6 @@ public class AntiCheatAPI {
         return getManager().getConfiguration().getGroups().getGroups();
     }
 
-    // XrayTracker API
-
-    /**
-     * Find out if a player is detected as using xray hacks (on any ore)
-     *
-     * @param player Player to check
-     * @return true if the player has any xray anomalies.
-     */
-    public static boolean isXrayer(Player player) {
-        String name = player.getName();
-        return xtracker.sufficientData(name) && xtracker.hasAbnormal(name);
-    }
-
-    // Advanced Users Only API.
-
     /**
      * Get access to all the other managers, advanced users ONLY
      *
@@ -190,7 +161,20 @@ public class AntiCheatAPI {
         return AntiCheat.getManager();
     }
 
+    // Advanced Users Only API.
+
     private static String getCallingClass() {
         return sun.reflect.Reflection.getCallerClass(2).getName();
+    }
+
+    /**
+     * Find out if a check will occur for a player. This checks if they are being tracked, the check is active, the player isn't exempt from the check, and the player doesn't have override permission.
+     *
+     * @param player Player to check
+     * @param type   Type to check
+     * @return true if plugin will check this player, and that all things allow it to happen.
+     */
+    public boolean willCheck(Player player, CheckType type) {
+        return chk.willCheck(player, type);
     }
 }

@@ -24,7 +24,10 @@ import net.gravitydevelopment.anticheat.config.ConfigurationFile;
 import net.gravitydevelopment.anticheat.config.providers.Groups;
 import net.gravitydevelopment.anticheat.util.Group;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class YamlGroupsHolder extends ConfigurationFile implements Groups {
 

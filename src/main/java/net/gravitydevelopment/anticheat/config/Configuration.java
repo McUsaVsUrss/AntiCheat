@@ -83,13 +83,13 @@ public class Configuration {
         if (config.enterprise.getValue() && enterprise.configMagic.getValue()) {
             handler = new MySQLMagicHolder(this);
             magic = (Magic) Proxy.newProxyInstance(Magic.class.getClassLoader(),
-                    new Class[] { Magic.class },
+                    new Class[]{Magic.class},
                     handler);
             dbfiles.add((MySQLMagicHolder) handler);
         } else {
             handler = new YamlMagicHolder(plugin, this);
             magic = (Magic) Proxy.newProxyInstance(Magic.class.getClassLoader(),
-                    new Class[] { Magic.class },
+                    new Class[]{Magic.class},
                     handler);
             flatfiles.add((YamlMagicHolder) handler);
         }
@@ -97,13 +97,13 @@ public class Configuration {
         if (config.enterprise.getValue() && enterprise.configLang.getValue()) {
             handler = new MySQLLangHolder(this);
             lang = (Lang) Proxy.newProxyInstance(Lang.class.getClassLoader(),
-                    new Class[] { Lang.class },
+                    new Class[]{Lang.class},
                     handler);
             dbfiles.add((MySQLLangHolder) handler);
         } else {
             handler = new YamlLangHolder(plugin, this);
             lang = (Lang) Proxy.newProxyInstance(Lang.class.getClassLoader(),
-                    new Class[] { Lang.class },
+                    new Class[]{Lang.class},
                     handler);
             flatfiles.add((YamlLangHolder) handler);
         }
