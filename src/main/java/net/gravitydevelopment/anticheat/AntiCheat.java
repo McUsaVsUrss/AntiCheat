@@ -65,9 +65,8 @@ public class AntiCheat extends JavaPlugin {
         eventList.add(new VehicleListener());
         eventList.add(new InventoryListener());
         // Order is important in some cases, don't screw with these unless needed, especially config
+
         setupConfig();
-        // Xray must come before events
-        setupXray();
         setupEvents();
         setupCommands();
         // setupProtocol(); TODO
@@ -103,33 +102,6 @@ public class AntiCheat extends JavaPlugin {
             protocolLib = true;
             packetManager = new PacketManager(ProtocolLibrary.getProtocolManager(), this, manager);
             verboseLog("Hooked into ProtocolLib");
-        }
-    }
-
-    private void setupXray() {
-        final XRayTracker xtracker = manager.getXRayTracker();
-        final int time = config.getConfig().alertXRayInterval.getValue() * 20;
-        if (config.getConfig().checkXRay.getValue()) {
-            eventList.add(new XRayListener());
-            if (config.getConfig().alertXRay.getValue()) {
-                getServer().getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
-                    @Override
-                    public void run() {
-                        for (Player player : getServer().getOnlinePlayers()) {
-                            String name = player.getName();
-                            if (!xtracker.hasAlerted(name) && xtracker.sufficientData(name) && xtracker.hasAbnormal(name)) {
-                                List<String> alert = new ArrayList<String>();
-                                alert.add(ChatColor.YELLOW + "[ALERT] " + ChatColor.WHITE + name + ChatColor.YELLOW + " might be using xray.");
-                                alert.add(ChatColor.YELLOW + "[ALERT] Please check their xray stats using " + ChatColor.WHITE + "/anticheat xray " + name + ChatColor.YELLOW + ".");
-                                Utilities.alert(alert);
-                                xtracker.logAlert(name);
-                            }
-                        }
-                    }
-                }, time, time);
-
-                verboseLog("Scheduled the XRay checker.");
-            }
         }
     }
 
